@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: customers_info
+    description: un cliente por registro
+    columns:
+      - name: customer_id
+        description: es la clave primaria
+        tests:
+          - unique
+          - not_null
+      - name: first_name
+        description: es el nombre del cliente
+      - name: last_name
+        description: es el apellido del cliente
+      - name: first_order_date
+        description: es la fecha de la primera orden del cliente
+      - name: last_order_date
+        description: es la fecha de la última orden del cliente
+      - name: num_orders
+        description: es el número total de órdenes del cliente
+      - name: lifetime_value
+        description: es el monto total de los pagos del cliente
