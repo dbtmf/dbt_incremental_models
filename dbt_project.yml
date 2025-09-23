@@ -48,3 +48,5 @@ models:
         +materialized: table
       marketing:
         +materialized: table
+    intermediate:
+      +materialized: tavle
