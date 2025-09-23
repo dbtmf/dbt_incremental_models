@@ -1,6 +1,6 @@
 with 
 
-order as (
+orders as (
 
     select 
         order_id,
@@ -14,7 +14,7 @@ payments as (
     
     select
         order_id,
-        sum(payments_amount) as total_amount
+        sum(payment_amount) as total_amount
     from 
         {{ref('stg_payments')}}
     group by 1
