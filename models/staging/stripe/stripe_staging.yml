@@ -1,0 +1,31 @@
+version: 2
+
+models:
+  - name: stg_payments
+    description: un pago por registro, en la capa de staging
+    columns:
+      - name: payment_id
+        description: es la clave primaria
+        tests:
+          - unique
+          - not_null
+      - name: order_id
+        description: es la clave foránea de la tabla de órdenes
+        tests:
+          - relationships:
+              field: order_id
+              to: ref('stg_orders')
+      - name: payment_method
+        description: "{{doc('src_payment_method')}}"
+        tests:
+          - accepted_values:
+              values: ['credit_card','coupon','bank_transfer','gift_card']
+      - name: payment_status
+        description: "{{doc('src_payment_status')}}"
+        tests:
+          - accepted_values:
+              values: ['success','fail']
+      - name: payment_amount
+        description: es el monto del pago
+      - name: created
+        description: es la fecha de creación del registro
