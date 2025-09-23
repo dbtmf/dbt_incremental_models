@@ -1,0 +1,33 @@
+version: 2
+
+sources:
+  - name: stripe
+    database: dbtdevelopment
+    schema: stripe
+    tables:
+      - name: payments
+        description: se tiene un registro por pago
+
+        freshness:
+                warn_after:
+                  count: 2700
+                  period: day
+                error_after:
+                  count: 2840
+                  period: day
+        loaded_at_field: created
+
+        columns:
+          - name: ID
+            description: es la clave primaria
+          - name: ORDERID
+            description: es la clave foránea de la tabla de órdenes
+          - name: PAYMENTMETHOD
+            description: "{{doc('src_payment_method')}}"
+          - name: status
+            description: "{{doc('src_payment_status')}}"
+          - name: amount
+            description: es el monto del pago
+          - name: created
+            description: es la fecha de creacion del registro
+              

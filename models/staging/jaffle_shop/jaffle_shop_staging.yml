@@ -1,0 +1,37 @@
+version: 2
+
+models:
+  - name: stg_orders
+    description: una orden por registro
+    columns:
+      - name: order_id
+        description: es la clave primaria
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: es la clave foránea de la tabla de clientes
+        tests:
+          - relationships:
+              field: customer_id
+              to: ref('stg_customers')
+      - name: order_date
+        description: es la fecha en la que se realizó la orden
+      - name: order_status
+        description: "{{doc('src_order_status')}}"
+        tests:
+          - accepted_values:
+              values: ['returned','completed','return_pending','shipped','placed']
+  - name: stg_customers
+    description: un cliente por registro
+    columns:
+      - name: customer_id
+        description: es la clave primaria
+        tests:
+          - unique
+          - not_null
+      - name: first_name
+        description: es el nombre del cliente
+      - name: last_name
+        description: es el apellido del cliente
+      
