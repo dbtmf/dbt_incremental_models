@@ -11,10 +11,10 @@ orders as (
 
     select 
         order_id,
-        count(customer_id) as num_customers
+        1 as num_customers,
+        order_date
     from 
         {{ref('stg_orders')}}
-    group by 1
 ),
 
 payments as (
