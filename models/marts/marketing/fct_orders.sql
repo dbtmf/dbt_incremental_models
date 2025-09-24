@@ -1,3 +1,10 @@
+
+{{
+    config(
+        materialized='incremental'
+    )
+}}
+
 with 
 
 orders as (
@@ -24,6 +31,7 @@ final as (
 
     select
         a.order_id,
+        a.order_date,
         a.num_customers,
         b.total_amount
     from 
@@ -31,4 +39,11 @@ final as (
     order by 1
 )
 
-select * from final
+SELECT * 
+FROM final
+{% if is_incremental() %}
+    WHERE order_date >= ( 
+        SELECT MAX(order_date) 
+        FROM {{ this }} 
+    )
+{% endif %}
