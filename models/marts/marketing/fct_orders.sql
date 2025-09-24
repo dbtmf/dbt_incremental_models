@@ -1,4 +1,3 @@
-
 {{
     config(
         materialized='incremental'
@@ -37,14 +36,24 @@ final as (
     from 
         orders as a left join payments as b using(order_id)
     order by 1
+),
+
+incrementals AS (
+
+    SELECT * 
+
+    FROM final
+
+    {% if is_incremental() %}
+        WHERE order_date >= ( 
+            SELECT MAX(order_date) 
+            FROM {{ this }} 
+        )
+    {% endif %}
+
+    ORDER BY order_id
 )
 
-SELECT * 
-FROM final
-{% if is_incremental() %}
-    WHERE order_date >= ( 
-        SELECT MAX(order_date) 
-        FROM {{ this }} 
-    )
-{% endif %}
-order by order_id
+
+select * from incrementals
+
