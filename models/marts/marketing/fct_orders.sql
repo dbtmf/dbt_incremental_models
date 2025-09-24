@@ -47,3 +47,4 @@ FROM final
         FROM {{ this }} 
     )
 {% endif %}
+order by order_id
