@@ -2,12 +2,9 @@
     config(
         materialized='incremental',
         unique_key = 'order_id',
-        incremental_strategy = 'insert_overwrite',
-        partition_by = {
-            'field':'order_date',
-            'data_type':'date',
-            'granularity':'day'
-        }
+        incremental_strategy = 'merge',
+        on_schema_change = 'fail'
+
     )
 }}
 
@@ -47,8 +44,10 @@ final as (
 
 incrementals AS (
 
-    SELECT * 
-
+    SELECT
+        order_id,
+        order_date,
+        num_customers
     FROM final
 
     {% if is_incremental() %}
