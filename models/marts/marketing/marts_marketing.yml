@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: fct_marketing
+    description: una orden por registro
+    columns:
+      - name: order_id
+        description: es la clave primaria
+        tests:
+          - not_null
+          - unique
+      - name: num_customers
+        description: es el número de clientes que poseen la orden
+      - name: total_amount
+        description: es el monto total de la orden
+        tests:
+          - not_null

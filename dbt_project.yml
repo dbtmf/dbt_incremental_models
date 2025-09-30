@@ -43,3 +43,10 @@ models:
         +materialized: table
       jaffle_shop:
         +materialized: table
+    marts:
+      finance:
+        +materialized: table
+      marketing:
+        +materialized: table
+    intermediate:
+      +materialized: table
